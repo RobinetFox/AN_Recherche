@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -15,15 +14,15 @@ class AffichageRechercheController extends AbstractController
       $conn = $this->getDoctrine()->getEntityManager()->getConnection();
 
     $sql = '
-        SELECT * FROM Eleves
+        SELECT Eleve_Nom, Eleve_Prenom FROM Eleves WHERE Eleve_Nom LIKE :recherche OR Eleve_Prenom LIKE :recherche;
         ';
     $stmt = $conn->prepare($sql);
-    $stmt->execute();
+    $stmt->execute(['recherche' => $_POST["requete"]]);
 
     // returns an array of arrays (i.e. a raw data set)
     $result = $stmt->fetchAll();
-        return $this->render('affichageRecherche/index.html.twig', [
-            'controller_name' => 'AffichageRechercheController',
+        return $this->render('recherche/index.html.twig', [
+            'controller_name' => 'RechercheController',
             'resultats' => $result,
         ]);
     }
