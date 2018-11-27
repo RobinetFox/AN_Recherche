@@ -12,8 +12,19 @@ class AffichageRechercheController extends AbstractController
      */
     public function index()
     {
+      $conn = $this->getEntityManager()->getConnection();
+
+    $sql = '
+        SELECT * FROM Eleves
+        ';
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
+
+    // returns an array of arrays (i.e. a raw data set)
+    $result = $stmt->fetchAll();
         return $this->render('affichage_recherche/index.html.twig', [
             'controller_name' => 'AffichageRechercheController',
+            'resultats' => $result,
         ]);
     }
 }
