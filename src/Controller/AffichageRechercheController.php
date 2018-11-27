@@ -12,7 +12,7 @@ class AffichageRechercheController extends AbstractController
      */
     public function index()
     {
-      $conn = $this->getEntityManager()->getConnection();
+      $conn = $this->getDoctrine()->getEntityManager()->getConnection();
 
     $sql = '
         SELECT * FROM Eleves
@@ -22,7 +22,7 @@ class AffichageRechercheController extends AbstractController
 
     // returns an array of arrays (i.e. a raw data set)
     $result = $stmt->fetchAll();
-        return $this->render('affichage_recherche/index.html.twig', [
+        return $this->render('affichageRecherche/index.html.twig', [
             'controller_name' => 'AffichageRechercheController',
             'resultats' => $result,
         ]);
